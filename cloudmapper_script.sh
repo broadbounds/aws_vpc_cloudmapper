@@ -1,11 +1,11 @@
 #cloud-boothook
 #! /bin/bash
 
-aws_account_name='BroadBounds'
-aws_account_id='003802458846'
-aws_region='us-east-2'
-ACCESS_KEY='AKIAQBYVE5LPAHY3JHVB'
-SECRET_KEY='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'
+aws_account_name=''
+aws_account_id=''
+aws_region=''
+cloudmapper_access_key=''
+cloudmapper_secret_key=''
 
 sudo yum update -y
 sudo yum install docker -y
