@@ -1,3 +1,4 @@
+#cloud-boothook
 #! /bin/bash
 
 aws_account_name='BroadBounds'
