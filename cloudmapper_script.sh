@@ -1,17 +1,18 @@
-#! /bin/bash
+			#! /bin/bash
 			
-			aws_account_name = ""
-			aws_account_id = ""
-			aws_region = ""
-			ACCESS_KEY = ""
-			SECRET_KEY = ""
+			aws_account_name=BroadBounds
+			aws_account_id=003802458846
+			aws_region=us-east-2
+			ACCESS_KEY=AKIAQBYVE5LPAHY3JHVB
+			SECRET_KEY=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
 			
             yum update -y
             yum install docker -y
 			yum -y install git
             systemctl restart docker
             systemctl enable docker
-			cd cloudmapper/
+			git clone https://github.com/duo-labs/cloudmapper.git
+			cd cloudmapper
 			sed -i "s/urllib3==1.26.5/urllib3==1.25.10/g" requirements.txt
 			sed -i "s/us-east-1/$aws_region/g" Dockerfile
 			cp config.json.demo config.json
@@ -27,6 +28,6 @@
 			python cloudmapper.py report --account $aws_account_name
 			python cloudmapper.py prepare --account $aws_account_name
 			python cloudmapper.py webserver --public
-			public_ip='curl http://169.254.169.254/latest/meta-data/public-ipv4'
+			public_ip=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)
 			echo "CloudMapper can be accessed at $public_ip on port 8000"
 			echo "Report details can be accessed on /account-data/report.html"
