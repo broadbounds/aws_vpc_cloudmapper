@@ -3,7 +3,7 @@
 
 aws_account_name=''
 aws_account_id=''
-aws_region=''
+region=''
 cloudmapper_access_key=''
 cloudmapper_secret_key=''
 
