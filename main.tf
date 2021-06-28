@@ -230,6 +230,7 @@ resource "aws_instance" "bastion_host" {
   }
 }
 
+
 # We associate the elastic ip to our bastion host
 resource "aws_eip_association" "bastion_eip_association" {
   instance_id   = aws_instance.bastion_host.id
