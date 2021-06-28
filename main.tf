@@ -235,3 +235,13 @@ resource "aws_eip_association" "bastion_eip_association" {
   instance_id   = aws_instance.bastion_host.id
   allocation_id = aws_eip.bastion_elastic_ip.id
 }
+
+
+# We save our wordpress and bastion host public ip in a file.
+resource "local_file" "ip_addresses" {
+  content = <<EOF
+            Bastion host public ip address: ${aws_eip.bastion_elastic_ip.public_ip}
+            Bastion host private ip address: ${aws_instance.bastion_host.private_ip}
+  EOF
+  filename = "${var.key_path}ip_addresses.txt"
+}
