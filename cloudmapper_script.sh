@@ -1,12 +1,6 @@
 #cloud-boothook
 #! /bin/bash
 
-aws_account_name=''
-aws_account_id=''
-region=''
-cloudmapper_access_key=''
-cloudmapper_secret_key=''
-
 sudo yum update -y
 sudo yum install docker -y
 sudo yum -y install git
@@ -15,7 +9,7 @@ sudo systemctl enable docker
 sudo git clone https://github.com/duo-labs/cloudmapper.git
 sudo cd cloudmapper
 sudo sed -i "s/urllib3==1.26.5/urllib3==1.25.10/g" requirements.txt
-sudo sed -i "s/us-east-1/$region/g" Dockerfile
+sudo sed -i "s/us-east-1/$aws_region/g" Dockerfile
 sudo cp config.json.demo config.json
 sudo sed -i "s/123456789012/$aws_account_id/g" config.json
 sudo sed -i "s/demo/$aws_account_name/g" config.json
