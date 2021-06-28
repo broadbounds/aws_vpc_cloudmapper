@@ -15,7 +15,7 @@ sudo systemctl enable docker
 sudo git clone https://github.com/duo-labs/cloudmapper.git
 sudo cd cloudmapper
 sudo sed -i "s/urllib3==1.26.5/urllib3==1.25.10/g" requirements.txt
-sudo sed -i "s/us-east-1/$aws_region/g" Dockerfile
+sudo sed -i "s/us-east-1/$region/g" Dockerfile
 sudo cp config.json.demo config.json
 sudo sed -i "s/123456789012/$aws_account_id/g" config.json
 sudo sed -i "s/demo/$aws_account_name/g" config.json
@@ -24,8 +24,8 @@ sudo echo "CloudMapper can be accessed at $public_ip on port 8000"
 sudo echo "Report details can be accessed on /account-data/report.html"
 sudo docker build -t cloudmapper .
 sudo docker run -dt \
-        -e AWS_ACCESS_KEY_ID=$ACCESS_KEY \
-        -e AWS_SECRET_ACCESS_KEY=$SECRET_KEY \
+        -e AWS_ACCESS_KEY_ID=$cloudmapper_access_key \
+        -e AWS_SECRET_ACCESS_KEY=$cloudmapper_secret_key \
         -p 8000:8000 \
         --name cloudmapper \
         cloudmapper
