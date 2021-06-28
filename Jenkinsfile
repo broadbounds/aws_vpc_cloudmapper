@@ -30,17 +30,57 @@ pipeline {
     stage('TerraformPlan'){
         steps {
             script {
-                echo "terraform moving to destroy"
+                sh "terraform plan -var 'access_key=$ACCESS_KEY' -var 'secret_key=$SECRET_KEY' -out terraform.tfplan;echo \$? > status"
+                stash name: "terraform-plan", includes: "terraform.tfplan"
             }
         }
     }
+    stage("TerraformSelect") {
+       steps {
+           script {
+                env.NEXT_STEP = input message: 'User input required', ok: 'Select',
+                parameters: [choice(name: 'NEXT_STEP', choices: 'apply\ndestroy\nnothing', description: 'What would you like to do next?')]
+           }
+           echo "${env.NEXT_STEP}"
+       }
+    }
     stage('TerraformApply'){
+        when {
+          expression {
+            return env.NEXT_STEP == 'apply';
+          }
+        }
+        steps {
+            script{                    
+                unstash "terraform-plan"
+                sh "terraform apply terraform.tfplan"
+            }
+        }
+    }
+    stage('TerraformDestroy'){
+        when {
+          expression {
+            return env.NEXT_STEP == 'destroy';
+          }
+        }
         steps {
             script{
                 sh "terraform destroy -auto-approve -var 'access_key=$ACCESS_KEY' -var 'secret_key=$SECRET_KEY' "
             }
         }
     }
+    stage('TerraformNothing'){
+        when {
+          expression {
+            return env.NEXT_STEP == 'nothing';
+          }
+        }
+        steps {
+            script{
+                echo "terraform did nothing to the infrastructure"
+            }
+        }
+    }
   }
-
+  
 }
