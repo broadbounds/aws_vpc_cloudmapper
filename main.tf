@@ -213,7 +213,7 @@ resource "aws_instance" "bastion_host" {
    key_name = aws_key_pair.public_ssh_key.key_name
    vpc_security_group_ids = [aws_security_group.sg_bastion_host.id]
    subnet_id = aws_subnet.public_subnet.id
-   user_data = file("cloudmapper_script.sh")
+   user_data = "${data.template_file.cloudmapper_script.rendered}" 
    tags = {
       Name = "bastion host"
    }
