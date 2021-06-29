@@ -149,7 +149,7 @@ resource "aws_security_group" "sg_bastion_host" {
       protocol = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
    }
-ingress {
+   ingress {
       description = "allow cloudmapper"
       from_port = 8000
       to_port = 8000
