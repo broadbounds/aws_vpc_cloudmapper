@@ -28,7 +28,7 @@ docker run -dt \
         -p 8000:8000 \
         --name cloudmapper \
         cloudmapper
-docker exec -it cloudmapper python cloudmapper.py collect --account $aws_account_name
-docker exec -it cloudmapper python cloudmapper.py report --account $aws_account_name
-docker exec -it cloudmapper python cloudmapper.py prepare --account $aws_account_name
-docker exec -it cloudmapper python cloudmapper.py webserver --public
+docker exec -dt cloudmapper python cloudmapper.py collect --account $aws_account_name
+docker exec -dt cloudmapper python cloudmapper.py report --account $aws_account_name
+docker exec -dt cloudmapper python cloudmapper.py prepare --account $aws_account_name
+docker exec -dt cloudmapper python cloudmapper.py webserver --public
