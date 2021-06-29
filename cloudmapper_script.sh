@@ -1,27 +1,28 @@
 #! /bin/bash
 
-sudo yum install docker -y
-sudo yum -y install git
-sudo systemctl restart docker
-sudo systemctl enable docker
-sudo git clone https://github.com/duo-labs/cloudmapper.git
-sudo cd cloudmapper
-sudo sed -i "s/urllib3==1.26.5/urllib3==1.25.10/g" requirements.txt
-sudo sed -i "s/us-east-1/${aws_region}/g" Dockerfile
-sudo cp config.json.demo config.json
-sudo sed -i "s/123456789012/${aws_account_id}/g" config.json
-sudo sed -i "s/demo/${aws_account_name}/g" config.json
+yum update -y
+yum install docker -y
+yum -y install git
+systemctl restart docker
+systemctl enable docker
+git clone https://github.com/duo-labs/cloudmapper.git
+cd cloudmapper
+sed -i "s/urllib3==1.26.5/urllib3==1.25.10/g" requirements.txt
+sed -i "s/us-east-1/${aws_region}/g" Dockerfile
+cp config.json.demo config.json
+sed -i "s/123456789012/${aws_account_id}/g" config.json
+sed -i "s/demo/${aws_account_name}/g" config.json
 public_ip=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)
-sudo echo "CloudMapper can be accessed at $public_ip on port 8000"
-sudo echo "Report details can be accessed on /account-data/report.html"
-sudo docker build -t cloudmapper .
-sudo docker run -dt \
+echo "CloudMapper will be available at $public_ip on port 8000"
+echo "Report details can be accessed on /account-data/report.html"
+docker build -t cloudmapper .
+docker run -dt \
         -e AWS_ACCESS_KEY_ID=${cloudmapper_access_key} \
         -e AWS_SECRET_ACCESS_KEY=${cloudmapper_secret_key} \
         -p 8000:8000 \
         --name cloudmapper \
         cloudmapper
-sudo docker exec -it cloudmapper python cloudmapper.py collect --account ${aws_account_name}
-sudo docker exec -it cloudmapper python cloudmapper.py report --account ${aws_account_name}
-sudo docker exec -it cloudmapper python cloudmapper.py prepare --account ${aws_account_name}
-sudo docker exec -it cloudmapper python cloudmapper.py webserver --public
+docker exec -it cloudmapper python cloudmapper.py collect --account ${aws_account_name}
+docker exec -it cloudmapper python cloudmapper.py report --account ${aws_account_name}
+docker exec -it cloudmapper python cloudmapper.py prepare --account ${aws_account_name}
+docker exec -it cloudmapper python cloudmapper.py webserver --public
