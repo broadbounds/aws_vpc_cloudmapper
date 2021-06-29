@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 aws_account_name=${aws_account_name}
 aws_account_id=${aws_account_id}
