@@ -1,7 +1,6 @@
 #cloud-boothook
 #! /bin/bash
 
-sudo yum update -y
 sudo yum install docker -y
 sudo yum -y install git
 sudo systemctl restart docker
