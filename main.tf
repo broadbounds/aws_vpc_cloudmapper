@@ -203,7 +203,7 @@ resource "local_file" "save_private_key" {
 }
 
 data "template_file" "cloudmapper_script" {
-  template = "${file("cloudmapper_script.tpl")}"
+  template = "${file("cloudmapper_script.sh")}"
   vars = {
     cloudmapper_access_key = var.cloudmapper_access_key
     cloudmapper_secret_key = var.cloudmapper_secret_key
