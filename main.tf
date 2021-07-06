@@ -254,6 +254,6 @@ resource "local_file" "ip_addresses" {
   content = <<EOF
             Bastion host public ip address: ${aws_eip.bastion_elastic_ip.public_ip}
             Bastion host private ip address: ${aws_instance.bastion_host.private_ip}
-  EOF
+            EOF
   filename = "${var.key_path}ip_addresses.txt"
 }
