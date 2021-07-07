@@ -27,7 +27,7 @@ docker run -dt \
         -e AWS_SECRET_ACCESS_KEY=$SECRET_KEY \
         -p 8000:8000 \
         --name cloudmapper \
-        cloudmapper /bin/bash
+        cloudmapper
 
 docker exec cloudmapper python cloudmapper.py prepare --account $aws_account_name
 docker exec cloudmapper python cloudmapper.py webserver --public
