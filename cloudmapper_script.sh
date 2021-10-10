@@ -22,14 +22,14 @@ public_ip=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)
 echo "CloudMapper can be accessed at $public_ip on port 8000"
 echo "Report details can be accessed on /account-data/report.html"
 docker build -t cloudmapper .
-docker run -dt \
+docker run -d -it \
         -e AWS_ACCESS_KEY_ID=$ACCESS_KEY \
         -e AWS_SECRET_ACCESS_KEY=$SECRET_KEY \
         -p 8000:8000 \
         --name cloudmapper \
         cloudmapper
 
-docker exec -dt cloudmapper python cloudmapper.py collect --account $aws_account_name
-docker exec -dt cloudmapper python cloudmapper.py report --account $aws_account_name
-docker exec -dt cloudmapper python cloudmapper.py prepare --account $aws_account_name
-docker exec -dt cloudmapper python cloudmapper.py webserver --public
+docker exec -d -it cloudmapper python cloudmapper.py collect --account $aws_account_name
+docker exec -d -it cloudmapper python cloudmapper.py report --account $aws_account_name
+docker exec -d -it cloudmapper python cloudmapper.py prepare --account $aws_account_name
+docker exec -d -it cloudmapper python cloudmapper.py webserver --public
